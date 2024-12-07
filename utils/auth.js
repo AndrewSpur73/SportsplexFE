@@ -1,24 +1,32 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import { clientCredentials } from './client';
+
+const endpoint = 'https://localhost:8000';
 
 const checkUser = (uid) => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/checkuser`, {
-    method: 'POST',
-    body: JSON.stringify({
-      uid,
-    }),
+  fetch(`${endpoint}/checkuser/${uid}`, {
+    method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
     },
   })
-    .then((resp) => resolve(resp.json()))
+    .then(async (res) => {
+      let data;
+      console.log('status:', res);
+      if (res.status === 204) {
+        resolve({});
+      } else {
+        data = await res.json();
+        console.log('data:', data);
+        resolve(data);
+      }
+    })
     .catch(reject);
 });
 
 const registerUser = (userInfo) => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/register`, {
+  fetch(`${endpoint}/users/`, {
     method: 'POST',
     body: JSON.stringify(userInfo),
     headers: {

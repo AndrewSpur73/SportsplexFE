@@ -1,8 +1,8 @@
 {
-  "name": "next-firebase-starter",
+  "name": "sportsplex",
   "private": true,
   "version": "1.0.0",
-  "author": "Trinity Christiana",
+  "author": "Andrew Spurlock",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -37,7 +37,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.25.1",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "husky": "^7.0.2",
+    "husky": "^7.0.4",
     "lint-staged": "^11.1.2",
     "prettier": "^2.4.1"
   }
