@@ -1,58 +1,36 @@
-import { clientCredentials } from '../utils/client';
+const endpoint = 'https://localhost:8000';
 
-const endpoint = clientCredentials.databaseURL;
-
-const getAllBookings = () => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/bookings`, {
+const getUserDetails = (uid) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/users/details/${uid}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
   })
-    .then((response) => response.json())
-    .then((data) => resolve(Object.values(data)))
-    .catch(reject);
-});
-
-const getOwnerBookings = (id) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/bookings/user/${id}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => resolve(Object.values(data)))
-    .catch(reject);
-});
-
-const getSingleBooking = (id) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/bookings/${id}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => resolve(Object.values(data)))
-    .catch(reject);
-});
-
-const createBooking = (payload) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/bookings`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-  })
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
     .then((data) => resolve(data))
     .catch(reject);
 });
 
-const editBooking = (payload) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/bookings/${payload.id}`, {
+const deleteUser = (id) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/users/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve((data)))
+    .catch(reject);
+});
+
+const editUser = (payload) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/users/${payload.id}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -64,36 +42,8 @@ const editBooking = (payload) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const deleteBooking = (id) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/bookings/${id}`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => resolve((data)))
-    .catch(reject);
-});
-
-const getUserBookings = (id) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/bookings/attend/${id}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => resolve(Object.values(data)))
-    .catch(reject);
-});
-
 export {
-  getAllBookings,
-  getOwnerBookings,
-  getSingleBooking,
-  getUserBookings,
-  deleteBooking,
-  editBooking,
-  createBooking,
+  deleteUser,
+  editUser,
+  getUserDetails,
 };
