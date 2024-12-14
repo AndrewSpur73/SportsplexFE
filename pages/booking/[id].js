@@ -49,11 +49,12 @@ export default function ViewBooking() {
       <div className="d-flex">
         {/* Image on the left */}
         <div className="me-3">
-          <img src={bookingDetails?.image} alt={bookingDetails?.name} style={{ width: '300px', height: 'auto', borderRadius: '8px' }} />
+          <img src={bookingDetails?.image} alt={bookingDetails?.facility} style={{ width: '300px', height: 'auto', borderRadius: '8px' }} />
         </div>
         {/* Title, tags, and content on the right */}
         <div style={{ color: 'black', flex: 1 }}>
-          <h1 style={{ fontSize: '2rem', marginBottom: '10px' }}>{bookingDetails?.name}</h1>
+          <h1 style={{ fontSize: '2rem', marginBottom: '10px' }}>{bookingDetails?.facility}</h1>
+          <h1 style={{ fontSize: '2rem', marginBottom: '10px' }}>{bookingDetails?.sportSpace}</h1>
           <p>{bookingDetails?.description || ''}</p>
         </div>
       </div>
