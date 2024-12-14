@@ -4,16 +4,17 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Link from 'next/link';
 import { useAuth } from '../../utils/context/authContext';
+import { deleteBooking } from '../../api/bookingData';
 // import { deletePost } from '../../api/postData';
 
-function BookingCard({ bookingObj }) {
+function BookingCard({ bookingObj, onUpdate }) {
   const { user } = useAuth();
 
-  // const deleteThisBooking = () => {
-  //   if (window.confirm(`Delete ${bookingObj.facility}, ${bookingObj.sportSpace}?`)) {
-  //     deletePost(postObj.id).then(() => onUpdate());
-  //   }
-  // };
+  const deleteThisBooking = () => {
+    if (window.confirm(`Delete ${bookingObj.facility}, ${bookingObj.sportSpace}?`)) {
+      deleteBooking(bookingObj.id).then(() => onUpdate());
+    }
+  };
 
   const isOwner = user?.uid === bookingObj.ownerId;
 
@@ -24,10 +25,11 @@ function BookingCard({ bookingObj }) {
       </div>
       <Card.Body className="card-body">
         <div>
-          <Card.Title className="card-title">{bookingObj.facility}</Card.Title>
+          <Card.Title className="card-title">Facility: {bookingObj.facility}</Card.Title>
           <Card.Title className="card-title">{bookingObj.sportSpace}</Card.Title>
           <Card.Text className="card-location">Sport: {bookingObj.category.name}</Card.Text>
           <Card.Text className="card-location">Location: {bookingObj.location.name}</Card.Text>
+          <Card.Text className="card-location">Number of times booked: {bookingObj.rsvps}</Card.Text>
           <Card.Text className="text-muted">{bookingObj.description}</Card.Text>
         </div>
         <div className="button-container">
@@ -43,6 +45,11 @@ function BookingCard({ bookingObj }) {
               </Button>
             </Link>
           )}
+          {isOwner && ( // Conditionally render the DELETE button if the user is the owner
+          <Button variant="danger" onClick={deleteThisBooking} className="m-2 btn-lg">
+            DELETE
+          </Button>
+          )}
         </div>
       </Card.Body>
     </Card>
@@ -56,6 +63,7 @@ BookingCard.propTypes = {
     facility: PropTypes.string,
     sportSpace: PropTypes.string,
     ownerId: PropTypes.number,
+    rsvps: PropTypes.number,
     image: PropTypes.string,
     description: PropTypes.string,
     location: PropTypes.string,
@@ -69,6 +77,6 @@ BookingCard.propTypes = {
     id: PropTypes.number,
     name: PropTypes.string,
   }).isRequired,
-  // onUpdate: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired,
 };
 export default BookingCard;
