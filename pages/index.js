@@ -1,26 +1,26 @@
-import { Button } from 'react-bootstrap';
-import { signOut } from '../utils/auth';
-import { useAuth } from '../utils/context/authContext';
+import { useEffect, useState } from 'react';
+import { getAllBookings } from '../api/bookingData';
+import BookingCard from '../components/cards/BookingCard';
 
 function Home() {
-  const { user } = useAuth();
+  const [bookings, setBookings] = useState([]);
+
+  const showBookings = () => {
+    getAllBookings()?.then(setBookings);
+  };
+
+  useEffect(() => {
+    showBookings();
+  }, []);
+
   return (
-    <div
-      className="text-center d-flex flex-column justify-content-center align-content-center"
-      style={{
-        height: '90vh',
-        padding: '30px',
-        maxWidth: '400px',
-        margin: '0 auto',
-      }}
-    >
-      <h1>Hello {user.fbUser.displayName}! </h1>
-      <p>Your Bio: {user.bio}</p>
-      <p>Click the button below to logout!</p>
-      <Button variant="danger" type="button" size="lg" className="copy-btn" onClick={signOut}>
-        Sign Out
-      </Button>
+
+    <div className="card-row">
+      {bookings.map((booking) => (
+        <BookingCard key={booking.id} bookingObj={booking} onUpdate={showBookings} />
+      ))}
     </div>
+
   );
 }
 
