@@ -10,7 +10,7 @@ function BookingCard({ bookingObj }) {
   const { user } = useAuth();
 
   // const deleteThisBooking = () => {
-  //   if (window.confirm(`Delete ${bookingObj.name}?`)) {
+  //   if (window.confirm(`Delete ${bookingObj.facility}, ${bookingObj.sportSpace}?`)) {
   //     deletePost(postObj.id).then(() => onUpdate());
   //   }
   // };
@@ -20,11 +20,12 @@ function BookingCard({ bookingObj }) {
   return (
     <Card className="booking-card">
       <div className="picture-container">
-        <Card.Img className="picture" variant="top" src={bookingObj.image} alt={bookingObj.name} />
+        <Card.Img className="picture" variant="top" src={bookingObj.image} alt={bookingObj.facility} />
       </div>
       <Card.Body className="card-body">
         <div>
-          <Card.Title className="card-title">{bookingObj.name}</Card.Title>
+          <Card.Title className="card-title">{bookingObj.facility}</Card.Title>
+          <Card.Title className="card-title">{bookingObj.sportSpace}</Card.Title>
           <Card.Text className="card-location">Sport: {bookingObj.category.name}</Card.Text>
           <Card.Text className="card-location">Location: {bookingObj.location.name}</Card.Text>
           <Card.Text className="text-muted">{bookingObj.description}</Card.Text>
@@ -52,7 +53,8 @@ BookingCard.propTypes = {
   bookingObj: PropTypes.shape({
     id: PropTypes.number,
     uid: PropTypes.string,
-    name: PropTypes.string,
+    facility: PropTypes.string,
+    sportSpace: PropTypes.string,
     ownerId: PropTypes.number,
     image: PropTypes.string,
     description: PropTypes.string,
