@@ -16,7 +16,7 @@ function BookingCard({ bookingObj, onUpdate }) {
     }
   };
 
-  const isOwner = user?.uid === bookingObj.ownerId;
+  const isOwner = user?.id === bookingObj.ownerId;
 
   return (
     <Card className="booking-card">
@@ -66,16 +66,14 @@ BookingCard.propTypes = {
     rsvps: PropTypes.number,
     image: PropTypes.string,
     description: PropTypes.string,
-    location: PropTypes.string,
-    category: PropTypes.string,
-  }).isRequired,
-  location: PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-  }).isRequired,
-  category: PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
+    location: PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+    }),
+    category: PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+    }),
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };
