@@ -19,12 +19,12 @@ export default function CommentForm({ bookingId, onCommentAdded }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Button type="submit">Submit Comment</Button>
+      <Button type="submit">Submit Review</Button>
       <div className="mb-3">
         <textarea
           className="form-control"
           rows="3"
-          placeholder="Add a comment"
+          placeholder="Add a review"
           value={commentText}
           onChange={(e) => setCommentText(e.target.value)}
           required

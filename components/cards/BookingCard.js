@@ -4,29 +4,32 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Link from 'next/link';
 import { useAuth } from '../../utils/context/authContext';
+import { deleteBooking } from '../../api/bookingData';
 // import { deletePost } from '../../api/postData';
 
-function BookingCard({ bookingObj }) {
+function BookingCard({ bookingObj, onUpdate }) {
   const { user } = useAuth();
 
-  // const deleteThisBooking = () => {
-  //   if (window.confirm(`Delete ${bookingObj.name}?`)) {
-  //     deletePost(postObj.id).then(() => onUpdate());
-  //   }
-  // };
+  const deleteThisBooking = () => {
+    if (window.confirm(`Delete ${bookingObj.facility}, ${bookingObj.sportSpace}?`)) {
+      deleteBooking(bookingObj.id).then(() => onUpdate());
+    }
+  };
 
-  const isOwner = user?.uid === bookingObj.ownerId;
+  const isOwner = user?.id === bookingObj.ownerId;
 
   return (
     <Card className="booking-card">
       <div className="picture-container">
-        <Card.Img className="picture" variant="top" src={bookingObj.image} alt={bookingObj.name} />
+        <Card.Img className="picture" variant="top" src={bookingObj.image} alt={bookingObj.facility} />
       </div>
       <Card.Body className="card-body">
         <div>
-          <Card.Title className="card-title">{bookingObj.name}</Card.Title>
+          <Card.Title className="card-title">Facility: {bookingObj.facility}</Card.Title>
+          <Card.Title className="card-title">{bookingObj.sportSpace}</Card.Title>
           <Card.Text className="card-location">Sport: {bookingObj.category.name}</Card.Text>
           <Card.Text className="card-location">Location: {bookingObj.location.name}</Card.Text>
+          <Card.Text className="card-location">Number of times booked: {bookingObj.rsvps}</Card.Text>
           <Card.Text className="text-muted">{bookingObj.description}</Card.Text>
         </div>
         <div className="button-container">
@@ -42,6 +45,11 @@ function BookingCard({ bookingObj }) {
               </Button>
             </Link>
           )}
+          {isOwner && ( // Conditionally render the DELETE button if the user is the owner
+          <Button variant="danger" onClick={deleteThisBooking} className="m-2 btn-lg">
+            DELETE
+          </Button>
+          )}
         </div>
       </Card.Body>
     </Card>
@@ -52,21 +60,21 @@ BookingCard.propTypes = {
   bookingObj: PropTypes.shape({
     id: PropTypes.number,
     uid: PropTypes.string,
-    name: PropTypes.string,
+    facility: PropTypes.string,
+    sportSpace: PropTypes.string,
     ownerId: PropTypes.number,
+    rsvps: PropTypes.number,
     image: PropTypes.string,
     description: PropTypes.string,
-    location: PropTypes.string,
-    category: PropTypes.string,
+    location: PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+    }),
+    category: PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+    }),
   }).isRequired,
-  location: PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-  }).isRequired,
-  category: PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-  }).isRequired,
-  // onUpdate: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired,
 };
 export default BookingCard;
