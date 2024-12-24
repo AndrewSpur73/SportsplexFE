@@ -53,7 +53,7 @@ const createBooking = (payload) => new Promise((resolve, reject) => {
 
 const editBooking = (payload) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/bookings/${payload.id}`, {
-    method: 'PATCH',
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },

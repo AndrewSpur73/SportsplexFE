@@ -31,7 +31,7 @@ export default function ViewBooking() {
   };
 
   const handleDelete = (commentId) => {
-    if (window.confirm('Delete comment?')) {
+    if (window.confirm('Delete review?')) {
       deleteComment(commentId)
         .then(() => {
           getBookingDetails();
@@ -53,8 +53,10 @@ export default function ViewBooking() {
         </div>
         {/* Title, tags, and content on the right */}
         <div style={{ color: 'black', flex: 1 }}>
-          <h1 style={{ fontSize: '2rem', marginBottom: '10px' }}>{bookingDetails?.facility}</h1>
-          <h1 style={{ fontSize: '2rem', marginBottom: '10px' }}>{bookingDetails?.sportSpace}</h1>
+          <h1 style={{ marginBottom: '10px' }}>{bookingDetails?.facility} - {bookingDetails?.sportSpace}</h1>
+          <h4 style={{ marginBottom: '10px' }}>Category: {bookingDetails?.category?.name}</h4>
+          <h4 style={{ marginBottom: '10px' }}>Location: {bookingDetails?.location?.name}</h4>
+          <h4 style={{ marginBottom: '10px' }}>Number of times booked: {bookingDetails?.rsvps}</h4>
           <p>{bookingDetails?.description || ''}</p>
         </div>
       </div>
