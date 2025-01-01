@@ -88,6 +88,52 @@ const getUserBookings = (id) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+// RSVP to a boooking
+const createReservation = (bookingId, userId) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/bookings/attend?bookingId=${bookingId}&userId=${userId}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(data))
+    .catch(reject);
+});
+
+// unRSVP to booking
+const removeReservation = (userId, bookingId) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/bookings/attend/${userId}/${bookingId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(async (res) => {
+      let data;
+      console.log('status:', res);
+      if (res.status === 204) {
+        resolve({});
+      } else {
+        data = await res.json();
+        resolve(data);
+      }
+    })
+    .catch(reject);
+});
+
+const toggleRSVP = (userId, bookingId) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/bookings/${userId}/reserved/${bookingId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json().catch(() => ({})))
+    .then((data) => resolve(data))
+    .catch(reject);
+});
+
 export {
   getAllBookings,
   getOwnerBookings,
@@ -96,4 +142,7 @@ export {
   deleteBooking,
   editBooking,
   createBooking,
+  createReservation,
+  removeReservation,
+  toggleRSVP,
 };
