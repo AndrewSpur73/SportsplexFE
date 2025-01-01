@@ -111,7 +111,6 @@ const removeReservation = (userId, bookingId) => new Promise((resolve, reject) =
   })
     .then(async (res) => {
       let data;
-      console.log('status:', res);
       if (res.status === 204) {
         resolve({});
       } else {

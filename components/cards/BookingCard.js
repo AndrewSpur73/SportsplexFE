@@ -1,14 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Link from 'next/link';
 import { useAuth } from '../../utils/context/authContext';
-import { deleteBooking } from '../../api/bookingData';
+import { createReservation, deleteBooking, toggleRSVP } from '../../api/bookingData';
 // import { deletePost } from '../../api/postData';
 
 function BookingCard({ bookingObj, onUpdate }) {
   const { user } = useAuth();
+  const [selectRsvp, setSelectRsvp] = useState(false);
+
+  const RSVP = (bookingId) => {
+    const userId = user.id;
+    createReservation(bookingId, userId);
+    setSelectRsvp(true);
+  };
+
+  useEffect(() => {
+    toggleRSVP(user.id, bookingObj.id).then(setSelectRsvp);
+  }, [user, bookingObj]);
 
   const deleteThisBooking = () => {
     if (window.confirm(`Delete ${bookingObj.facility}, ${bookingObj.sportSpace}?`)) {
@@ -29,21 +40,29 @@ function BookingCard({ bookingObj, onUpdate }) {
           <Card.Title className="card-title">{bookingObj.sportSpace}</Card.Title>
           <Card.Text className="card-location">Sport: {bookingObj.category.name}</Card.Text>
           <Card.Text className="card-location">Location: {bookingObj.location.name}</Card.Text>
-          <Card.Text className="card-location">Number of times booked: {bookingObj.rsvps}</Card.Text>
           <Card.Text className="text-muted">{bookingObj.description}</Card.Text>
         </div>
         <div className="button-container">
           <Link href={`/booking/${bookingObj.id}`} passHref>
             <Button variant="primary" className="m-2 btn-lg">
-              VIEW
+              View Details
             </Button>
           </Link>
+          {selectRsvp ? (
+            <span className="text-success">Booking Reserved</span>
+          ) : (
+            <Button variant="primary" className="m-2 btn-lg" onClick={() => RSVP(bookingObj.id)}>
+              RSVP
+            </Button>
+          )}
+        </div>
+        <div className="button-container">
           {isOwner && (
-            <Link href={`/booking/edit/${bookingObj.id}`} passHref>
-              <Button variant="info" className="m-2 btn-lg">
-                EDIT
-              </Button>
-            </Link>
+          <Link href={`/booking/edit/${bookingObj.id}`} passHref>
+            <Button variant="info" className="m-2 btn-lg">
+              EDIT
+            </Button>
+          </Link>
           )}
           {isOwner && ( // Conditionally render the DELETE button if the user is the owner
           <Button variant="danger" onClick={deleteThisBooking} className="m-2 btn-lg">
