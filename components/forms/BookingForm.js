@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
-import { Button, FloatingLabel } from 'react-bootstrap';
+import {
+  Button, Card, Container,
+} from 'react-bootstrap';
 import { useAuth } from '../../utils/context/authContext';
 import { getCategories } from '../../api/categoryData';
 import { createBooking, editBooking } from '../../api/bookingData';
@@ -60,115 +62,125 @@ export default function BookingForm({ obj }) {
   const isOwner = !obj.id || obj.ownerId === user.id;
 
   return (
-    <div className="flex w-[500px] mx-auto inter-normal">
-      <div className="flex-grow mt-32">
-        {isOwner ? (
-          <Form onSubmit={handleSubmit}>
-            <Form.Label>{obj.id ? 'Update' : 'Create'} Booking</Form.Label>
+    <Container style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
+      <Card style={{
+        width: '100%', maxWidth: '800px', backgroundColor: '#f8f9fa', border: '1px solid #6c757d', borderRadius: '8px', padding: '20px',
+      }}
+      >
+        <Card.Body>
+          <Card.Title style={{
+            textAlign: 'center', marginBottom: '20px', fontWeight: 'bold', color: '#060b3b', // Updated color
+          }}
+          >
+            {obj.id ? 'Update' : 'Create'} a Booking
+          </Card.Title>
 
-            {/* FACILITY INPUT */}
-            <Form.Group controlId="formFacility" className="mb-3">
-              <Form.Control
-                type="text"
-                placeholder="Enter a facility"
-                name="facility"
-                value={formInput.facility}
-                onChange={handleChange}
-                className="input rounded-none"
-                required
-              />
-            </Form.Group>
+          {isOwner ? (
+            <Form onSubmit={handleSubmit}>
+              {/* Facility Input */}
+              <Form.Group controlId="formFacility" className="mb-3">
+                <Form.Label style={{ fontWeight: 'bold', color: '#060b3b' }}>Facility</Form.Label> {/* Updated color */}
+                <Form.Control
+                  type="text"
+                  placeholder="Enter a facility"
+                  name="facility"
+                  value={formInput.facility}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
 
-            {/* SPORT SPACE INPUT */}
-            <Form.Group controlId="formSportSpace" className="mb-3">
-              <Form.Control
-                type="text"
-                placeholder="Enter the name of the field, court, pool, etc."
-                name="sportSpace"
-                value={formInput.sportSpace}
-                onChange={handleChange}
-                className="input rounded-none"
-                required
-              />
-            </Form.Group>
+              {/* Sport Space Input */}
+              <Form.Group controlId="formSportSpace" className="mb-3">
+                <Form.Label style={{ fontWeight: 'bold', color: '#060b3b' }}>Sport Space</Form.Label> {/* Updated color */}
+                <Form.Control
+                  type="text"
+                  placeholder="Enter the name of the field, court, pool, etc."
+                  name="sportSpace"
+                  value={formInput.sportSpace}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
 
-            {/* DESCRIPTION TEXTAREA */}
-            <Form.Group controlId="formDescription" className="mb-3">
-              <Form.Control
-                as="textarea"
-                placeholder="Description"
-                style={{ height: '100px' }}
-                name="description"
-                value={formInput.description}
-                onChange={handleChange}
-                className="input rounded-none"
-                required
-              />
-            </Form.Group>
+              {/* Description Textarea */}
+              <Form.Group controlId="formDescription" className="mb-3">
+                <Form.Label style={{ fontWeight: 'bold', color: '#060b3b' }}>Description</Form.Label> {/* Updated color */}
+                <Form.Control
+                  as="textarea"
+                  placeholder="Enter a description"
+                  style={{ height: '100px' }}
+                  name="description"
+                  value={formInput.description}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
 
-            {/* IMAGE */}
-            <Form.Group controlId="formBasicImage" className="mb-3">
-              <Form.Control
-                type="url"
-                name="image"
-                placeholder="Enter an image URL"
-                value={formInput.image || ''}
-                onChange={handleChange}
-                className="input rounded-none"
-                required
-              />
-            </Form.Group>
+              {/* Image URL */}
+              <Form.Group controlId="formBasicImage" className="mb-3">
+                <Form.Label style={{ fontWeight: 'bold', color: '#060b3b' }}>Image URL</Form.Label> {/* Updated color */}
+                <Form.Control
+                  type="url"
+                  placeholder="Enter an image URL"
+                  name="image"
+                  value={formInput.image || ''}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
 
-            {/* SPORT CATEGORIES */}
-            <FloatingLabel controlId="floatingSelect" label="Category">
+              {/* Sport Categories */}
+              <Form.Label style={{ fontWeight: 'bold', color: '#060b3b' }}>Category</Form.Label> {/* Updated color */}
               <Form.Select
-                style={{ minHeight: '100px', fontSize: '23px' }}
                 aria-label="Category"
                 name="categoryId"
                 onChange={handleChange}
-                className="mb-3"
                 value={formInput.categoryId}
                 required
               >
                 <option value="">Select a Sport</option>
                 {categories.map((category) => (
-                  <option key={category.id} value={category.id} type="number">
+                  <option key={category.id} value={category.id}>
                     {category.name}
                   </option>
                 ))}
               </Form.Select>
-            </FloatingLabel>
 
-            {/* LOCATIONS */}
-            <FloatingLabel controlId="floatingSelect" label="Location">
+              {/* Locations */}
+              <Form.Label style={{ fontWeight: 'bold', color: '#060b3b' }}>Location</Form.Label> {/* Updated color */}
               <Form.Select
-                style={{ minHeight: '100px', fontSize: '23px' }}
                 aria-label="Location"
                 name="locationId"
                 onChange={handleChange}
-                className="mb-3"
                 value={formInput.locationId}
                 required
               >
                 <option value="">Select a Location</option>
                 {locations.map((location) => (
-                  <option key={location.id} value={location.id} type="number">
+                  <option key={location.id} value={location.id}>
                     {location.name}
                   </option>
                 ))}
               </Form.Select>
-            </FloatingLabel>
 
-            {/* SUBMIT BUTTON */}
-            <Button type="submit" className="form-button">
-              {obj.id ? 'Update' : 'Create'} Booking
-            </Button>
-          </Form>
-        ) : (
-          <p>You do not have permission to edit this booking.</p>
-        )}
-      </div>
-    </div>
+              {/* Submit Button */}
+              <Button
+                type="submit"
+                variant="primary"
+                style={{
+                  width: '100%', fontSize: '16px', padding: '10px', marginTop: '20px',
+                }}
+              >
+                {obj.id ? 'Update' : 'Create'} Booking
+              </Button>
+            </Form>
+          ) : (
+            <p style={{ textAlign: 'center', color: '#6c757d' }}>You do not have permission to edit this booking.</p>
+          )}
+        </Card.Body>
+      </Card>
+    </Container>
   );
 }
 BookingForm.propTypes = {

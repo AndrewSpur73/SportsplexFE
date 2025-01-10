@@ -35,12 +35,19 @@ function BookingCard({ bookingObj, onUpdate }) {
         <Card.Img className="picture" variant="top" src={bookingObj.image} alt={bookingObj.facility} />
       </div>
       <Card.Body className="card-body">
-        <div>
-          <Card.Title className="card-title">Facility: {bookingObj.facility}</Card.Title>
-          <Card.Title className="card-title">{bookingObj.sportSpace}</Card.Title>
-          <Card.Text className="card-location">Sport: {bookingObj.category.name}</Card.Text>
-          <Card.Text className="card-location">Location: {bookingObj.location.name}</Card.Text>
-          <Card.Text className="text-muted">{bookingObj.description}</Card.Text>
+        <div className="card-content">
+          <Card.Title className="card-title" style={{ color: '#060b3b' }}>
+            Facility: {bookingObj.facility}
+          </Card.Title>
+          <Card.Title className="card-title" style={{ color: '#060b3b' }}>
+            {bookingObj.sportSpace}
+          </Card.Title>
+          <Card.Text className="card-location" style={{ color: '#060b3b' }}>
+            Sport: {bookingObj.category.name}
+          </Card.Text>
+          <Card.Text className="card-location" style={{ color: '#060b3b' }}>
+            Location: {bookingObj.location.name}
+          </Card.Text>
         </div>
         <div className="button-container">
           <Link href={`/booking/${bookingObj.id}`} passHref>
@@ -49,7 +56,7 @@ function BookingCard({ bookingObj, onUpdate }) {
             </Button>
           </Link>
           {selectRsvp ? (
-            <span className="text-success">Booking Reserved</span>
+            <span style={{ fontWeight: 'bold' }} className="text-success">Booking Reserved</span>
           ) : (
             <Button variant="primary" className="m-2 btn-lg" onClick={() => RSVP(bookingObj.id)}>
               RSVP
@@ -58,16 +65,16 @@ function BookingCard({ bookingObj, onUpdate }) {
         </div>
         <div className="button-container">
           {isOwner && (
-          <Link href={`/booking/edit/${bookingObj.id}`} passHref>
-            <Button variant="info" className="m-2 btn-lg">
-              EDIT
-            </Button>
-          </Link>
+            <Link href={`/booking/edit/${bookingObj.id}`} passHref>
+              <Button variant="info" className="m-2 btn-lg">
+                EDIT
+              </Button>
+            </Link>
           )}
-          {isOwner && ( // Conditionally render the DELETE button if the user is the owner
-          <Button variant="danger" onClick={deleteThisBooking} className="m-2 btn-lg">
-            DELETE
-          </Button>
+          {isOwner && (
+            <Button variant="danger" onClick={deleteThisBooking} className="m-2 btn-lg">
+              DELETE
+            </Button>
           )}
         </div>
       </Card.Body>

@@ -5,38 +5,84 @@ import {
   Navbar, //
   Container,
   Nav,
-  Button,
 } from 'react-bootstrap';
-import { signOut } from '../utils/auth';
+import UserMenu from './UserMenu';
 
 export default function NavBar() {
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" style={{ padding: '5px 0', paddingBottom: '5px' }}>
+    <Navbar collapseOnSelect expand="lg" style={{ padding: '5px 0', backgroundColor: '#939393' }}>
       <Container>
         <Link passHref href="/">
-          <Navbar.Brand>            <img
-            src="\images\Sportsplex.png"
-            alt="Sportsplex Logo"
-            style={{ height: '80px', width: 'auto' }}
-          />
+          <Navbar.Brand>
+            <img
+              src="\images\Sportsplex.png"
+              alt="Sportsplex Logo"
+              style={{ height: '100px', width: 'auto' }} // Increased the logo size
+            />
           </Navbar.Brand>
         </Link>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto" style={{ fontSize: '1.25rem', display: 'flex', alignItems: 'center' }}>
-            {/* CLOSE NAVBAR ON LINK SELECTION: https://stackoverflow.com/questions/72813635/collapse-on-select-react-bootstrap-navbar-with-nextjs-not-working */}
+          <Nav
+            className="me-auto"
+            style={{
+              fontSize: '1.25rem', fontWeight: '500', fontFamily: '"Helvetica Neue", Arial, sans-serif', display: 'flex', alignItems: 'center',
+            }}
+          >
             <Link passHref href="/">
-              <Nav.Link style={{ marginLeft: '15px', marginRight: '20px', height: '50px' }}>Home</Nav.Link>
+              <Nav.Link
+                style={{
+                  marginLeft: '15px',
+                  marginRight: '20px',
+                  height: '50px',
+                  fontWeight: '600',
+                  color: '#060b3b',
+                  transition: 'color 0.3s, transform 0.3s',
+                  fontSize: '1.25rem',
+                }}
+                className="navbar-link"
+              >
+                Home
+              </Nav.Link>
             </Link>
             <Link passHref href="/booking/new">
-              <Nav.Link style={{ marginRight: 'auto', marginLeft: '10px', height: '50px' }}>NEW BOOKING</Nav.Link>
+              <Nav.Link
+                style={{
+                  marginRight: 'auto',
+                  marginLeft: '10px',
+                  height: '50px',
+                  fontWeight: '600',
+                  color: '#060b3b',
+                  transition: 'color 0.3s, transform 0.3s',
+                  fontSize: '1.25rem',
+                }}
+                className="navbar-link"
+              >
+                Create a Booking
+              </Nav.Link>
             </Link>
-            <Button variant="danger" onClick={signOut} style={{ height: '50px' }}>
-              Sign Out
-            </Button>
+            <Link passHref href="/booking/booked">
+              <Nav.Link
+                style={{
+                  marginRight: 'auto',
+                  marginLeft: '10px',
+                  height: '50px',
+                  fontWeight: '600',
+                  color: '#060b3b',
+                  transition: 'color 0.3s, transform 0.3s',
+                  fontSize: '1.25rem',
+                }}
+                className="navbar-link"
+              >
+                My Bookings
+              </Nav.Link>
+            </Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
+      <div className="usermenu">
+        <UserMenu />
+      </div>
     </Navbar>
   );
 }
