@@ -53,11 +53,11 @@ export default function ViewBooking() {
         </div>
         {/* Title, tags, and content on the right */}
         <div style={{ color: 'black', flex: 1 }}>
-          <h1 style={{ marginBottom: '10px' }}>{bookingDetails?.facility} - {bookingDetails?.sportSpace}</h1>
-          <h4 style={{ marginBottom: '10px' }}>Category: {bookingDetails?.category?.name}</h4>
-          <h4 style={{ marginBottom: '10px' }}>Location: {bookingDetails?.location?.name}</h4>
-          <h4 style={{ marginBottom: '10px' }}>Number of times booked: {bookingDetails?.rsvps}</h4>
-          <p>{bookingDetails?.description || ''}</p>
+          <h1 style={{ marginBottom: '10px', color: '#060b3b' }}>{bookingDetails?.facility} - {bookingDetails?.sportSpace}</h1>
+          <h4 style={{ marginBottom: '10px', color: '#060b3b' }}>Category: {bookingDetails?.category?.name}</h4>
+          <h4 style={{ marginBottom: '10px', color: '#060b3b' }}>Location: {bookingDetails?.location?.name}</h4>
+          <h4 style={{ marginBottom: '10px', color: '#060b3b' }}>Number of times booked: {bookingDetails?.rsvps}</h4>
+          <p style={{ marginBottom: '10px', color: '#060b3b' }}>{bookingDetails?.description || ''}</p>
         </div>
       </div>
       <hr />

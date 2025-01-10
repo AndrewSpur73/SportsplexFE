@@ -76,8 +76,8 @@ const deleteBooking = (id) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const getUserBookings = (id) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/bookings/attend/${id}`, {
+const getUserBookings = (userId) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/bookings/attend/${userId}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

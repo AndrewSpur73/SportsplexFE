@@ -57,7 +57,7 @@ export default function CommentCard({
               </div>
             </div>
           ) : (
-            <Card.Title style={{ margin: '5px 0px 5px 0px' }}>{commentObj.content}</Card.Title>
+            <Card.Title style={{ margin: '5px 0px 5px 0px', color: '#060b3b' }}>{commentObj.content}</Card.Title>
           )}
           { user.id === commentObj.userId ? (
             <>
