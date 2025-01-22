@@ -45,7 +45,7 @@ export default function ViewBooking() {
   };
   console.warn(bookingDetails);
   return (
-    <div className="mt-5 d-flex flex-column">
+    <div className="m-5 d-flex flex-column">
       <div className="d-flex">
         {/* Image on the left */}
         <div className="me-3">

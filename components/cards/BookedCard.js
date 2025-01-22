@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import Link from 'next/link';
 import { useAuth } from '../../utils/context/authContext';
 import { getUserBookings, removeReservation } from '../../api/bookingData';
 
@@ -53,6 +54,11 @@ function WatchCard() {
                     <Button variant="outline-danger" onClick={() => unRSVP(booking)}>
                       Remove Booking
                     </Button>
+                    <Link href={`/booking/${booking.id}`} passHref>
+                      <Button variant="outline-primary" className="m-2">
+                        View Details
+                      </Button>
+                    </Link>
                   </Card.Body>
                 </Card>
               </li>
