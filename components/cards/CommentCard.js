@@ -82,6 +82,7 @@ CommentCard.propTypes = {
     id: PropTypes.number,
     image: PropTypes.string,
     userName: PropTypes.string,
+    venueBooker: PropTypes.string,
   }).isRequired,
   consumeComment: PropTypes.func.isRequired,
   updateComment: PropTypes.func.isRequired,
